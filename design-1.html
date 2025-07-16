@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mockup NeuroRehabLab Task Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            position: relative;
+            min-height: 100vh;
+        }
+       
+        .main-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%; 
+            width: 100%;
+        }
+
+        .main-card .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .row.g-4 {
+            align-items: stretch;
+        }
+
+        .preview-card-container {
+            display: flex;
+        }
+        @media (max-width: 991.98px) {
+            .preview-card-container {
+                display: none;
+            }
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: none; 
+        }
+        @media (max-width: 991.98px) {
+            .floating-button {
+                display: flex;
+            }
+        }
+
+        .modal-preview-content {
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: .375rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <div class="row g-4 align-items-stretch">
+            <div class="col-lg-6 d-flex"> 
+                <div class="card shadow-sm main-card left-card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Configurazione</h4>
+
+                        <div class="mb-4">
+                            <label for="mainDropdown" class="form-label">Seleziona un'opzione:</label>
+                            <select class="form-select" id="mainDropdown">
+                                <option selected disabled>Scegli...</option>
+                                <option value="profile">Profile</option>
+                                <option value="cancelation">Cancelation</option>
+                                <option value="number-sequencing">Number Sequencing</option>
+                            </select>
+                        </div>
+
+                        <div id="dynamicFormCard" class="card mt-3" style="display: none;">
+                            <div class="card-body">
+                                <h5 class="card-title" id="formCardTitle"></h5>
+                                <form id="dynamicForm">
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 preview-card-container">
+                <div class="card shadow-sm main-card preview-card" id="previewCard">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <h4 class="card-title mb-4">Anteprima</h4>
+                        <p class="text-muted text-center">Qui si visualizza l'anteprima</p>
+                        <div id="previewContentDesktop" class="w-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary floating-button" type="button" data-bs-toggle="modal" data-bs-target="#previewModal" aria-label="Mostra Anteprima">
+        <i class="bi bi-eye"></i>
+    </button>
+
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="previewModalLabel">Anteprima</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-preview-content d-flex flex-column justify-content-center align-items-center">
+                        <p class="text-muted text-center">Qui si visualizza l'anteprima nel modal</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainDropdown = document.getElementById('mainDropdown');
+            const dynamicFormCard = document.getElementById('dynamicFormCard');
+            const formCardTitle = document.getElementById('formCardTitle');
+            const dynamicForm = document.getElementById('dynamicForm');
+            const modalPreviewContent = document.querySelector('#previewModal .modal-preview-content');
+
+            const forms = {
+                'profile': `
+                    <div class="mb-3">
+                        <label for="inputXyz1" class="form-label">Elemento XYZ 1:</label>
+                        <input type="text" class="form-control" id="inputXyz1" placeholder="Inserisci valore">
+                    </div>
+                    <div class="mb-3">
+                        <label for="sliderXyz2" class="form-label">Elemento XYZ 2 (Slider):</label>
+                        <input type="range" class="form-range" min="0" max="100" id="sliderXyz2">
+                        <span id="sliderXyz2Value">0</span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="selectXyz3" class="form-label">Elemento XYZ 3 (Select):</label>
+                        <select class="form-select" id="selectXyz3">
+                            <option selected>Opzione A</option>
+                            <option>Opzione B</option>
+                            <option>Opzione C</option>
+                        </select>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" value="" id="checkXyz4">
+                        <label class="form-check-label" for="checkXyz4">
+                            Elemento XYZ 4 (Checkbox)
+                        </label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="textareaXyz5" class="form-label">Elemento XYZ 5 (Testo):</label>
+                        <textarea class="form-control" id="textareaXyz5" rows="3"></textarea>
+                    </div>
+                `,
+                'cancelation': `
+                    <div class="mb-3">
+                        <label for="selectXyz1" class="form-label">Elemento XYZ 1 (Select):</label>
+                        <select class="form-select" id="selectXyz1">
+                            <option selected>Valore 1</option>
+                            <option>Valore 2</option>
+                            <option>Valore 3</option>
+                            <option>Valore 4</option>
+                            <option>Valore 5</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateXyz2" class="form-label">Elemento XYZ 2 (Data):</label>
+                        <input type="date" class="form-control" id="dateXyz2">
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" value="" id="checkXyz3">
+                        <label class="form-check-label" for="checkXyz3">
+                            Elemento XYZ 3 (Checkbox)
+                        </label>
+                    </div>
+                     <div class="mb-3">
+                        <label for="textareaXyz4" class="form-label">Elemento XYZ 4 (Testo):</label>
+                        <textarea class="form-control" id="textareaXyz4" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sliderXyz5" class="form-label">Elemento XYZ 5 (Slider):</label>
+                        <input type="range" class="form-range" min="1" max="10" id="sliderXyz5">
+                        <span id="sliderXyz5Value">1</span>
+                    </div>
+                `,
+                'number-sequencing': `
+                    <div class="mb-3">
+                        <label for="numberXyz1" class="form-label">Elemento XYZ 1 (Numero):</label>
+                        <input type="number" class="form-control" id="numberXyz1" value="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="numberXyz2" class="form-label">Elemento XYZ 2 (Numero):</label>
+                        <input type="number" class="form-control" id="numberXyz2" value="10">
+                    </div>
+                    <div class="mb-3">
+                        <label for="numberXyz3" class="form-label">Elemento XYZ 3 (Numero):</label>
+                        <input type="number" class="form-control" id="numberXyz3" value="1" min="1">
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" value="" id="checkXyz4">
+                        <label class="form-check-label" for="checkXyz4">
+                            Elemento XYZ 4 (Checkbox)
+                        </label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="selectXyz5" class="form-label">Elemento XYZ 5 (Select):</label>
+                        <select class="form-select" id="selectXyz5">
+                            <option selected>Formato A</option>
+                            <option>Formato B</option>
+                            <option>Formato C</option>
+                        </select>
+                    </div>
+                `
+            };
+
+            mainDropdown.addEventListener('change', function() {
+                const selectedOption = this.value;
+                if (selectedOption && forms[selectedOption]) {
+                    formCardTitle.textContent = selectedOption.charAt(0).toUpperCase() + selectedOption.slice(1);
+                    dynamicForm.innerHTML = forms[selectedOption];
+                    dynamicFormCard.style.display = 'block';
+
+                    const sliders = dynamicForm.querySelectorAll('input[type="range"]');
+                    sliders.forEach(slider => {
+                        const sliderId = slider.id;
+                        const sliderValueSpan = document.getElementById(`${sliderId}Value`);
+                        if (sliderValueSpan) {
+                            slider.addEventListener('input', () => {
+                                sliderValueSpan.textContent = slider.value;
+                            });
+                            sliderValueSpan.textContent = slider.value;
+                        }
+                    });
+                } else {
+                    dynamicFormCard.style.display = 'none';
+                    dynamicForm.innerHTML = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

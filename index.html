@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroRehabLab Task Generator - TuchSoft MockUp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Sfondo sfumato */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #fff;
+            text-align: center;
+        }
+        .landing-container {
+            background-color: rgba(255, 255, 255, 0.1); /* Sfondo semi-trasparente */
+            backdrop-filter: blur(10px); /* Effetto sfocatura sullo sfondo */
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+        }
+        .landing-container h1 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .landing-container p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .landing-container .btn {
+            font-size: 1.1rem;
+            padding: 12px 30px;
+            margin: 10px;
+            border-radius: 50px; /* Pulsanti arrotondati */
+            transition: all 0.3s ease;
+        }
+        .landing-container .btn-primary {
+            background-color: #00bcd4; /* Un bel blu-ciano */
+            border-color: #00bcd4;
+        }
+        .landing-container .btn-primary:hover {
+            background-color: #00a8bd;
+            border-color: #00a8bd;
+            transform: translateY(-3px); /* Effetto leggero al hover */
+        }
+        .landing-container .btn-secondary {
+            background-color: #e91e63; /* Un bel rosa-rosso */
+            border-color: #e91e63;
+        }
+        .landing-container .btn-secondary:hover {
+            background-color: #d81b60;
+            border-color: #d81b60;
+            transform: translateY(-3px);
+        }
+        .text-primary {
+            color: #00a8bd !important;
+        }
+
+        /* Media queries per schermi più piccoli */
+        @media (max-width: 576px) {
+            .landing-container {
+                padding: 30px 20px;
+            }
+            .landing-container h1 {
+                font-size: 2rem;
+            }
+            .landing-container p {
+                font-size: 1rem;
+            }
+            .landing-container .btn {
+                width: 100%; /* Pulsanti a piena larghezza su mobile */
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-container">
+        <h1>Proposte</h1>
+        <p>Di seguito due differenti proposte per il design del generatore.</p>
+        <p> Entrambe sono al momento realizzate con Boostrap e senza alcun framework, da intenersi come wireframe.</p>
+        <p>Entrambi i design funzionano sia su desktop che su mobile.</p>
+        <div>
+            <a href="./design-1.html" target="_blank" class="btn btn-primary">Select</a>
+            <a href="./design-2.html" target="_blank" class="btn btn-secondary">Sidebar</a>
+        </div>
+        <p class="mt-5">Per la veste grafica del prodotto ho accesso completo a tutti i seguenti <a href="https://www.creative-tim.com/templates" class="text-primary" target="_blank">temi e template</a>, che è possibile utilizzare e personalizzare per rendere il design pi rapido; In alternativa è possibile creare un tema compleatemnte pesonalizato</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
